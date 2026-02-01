@@ -8,11 +8,38 @@ def avgPrice(arr):
     return total / len(arr)
 
 
+#year prices generator to allow even comparison between mc1 and mc2
+def priceGen():
+    prices = []
+    share = 100
+    pmod = 0.5
+    
+    #to add drift
+    for i in range(365):
+        a = random.random()
+        
+        if a>pmod:
+            change = random.uniform(0, 0.02)
+            share+=share*change
+            pmod-=0.003
+        else:
+            change = random.uniform(-0.02, 0)
+            share+=share*change
+            pmod+=0.003
+        prices.append(share)
+    
+    return prices
+        
+
+
 # trading sim
 def monteCarlo1(length):
+    
     results = []
+    nwtrend = []
 
     for a in range(length):
+        prices = priceGen()
         nw = 9900
         share = 100
         stockCount = 1
@@ -23,9 +50,8 @@ def monteCarlo1(length):
         his100 = []
         his10 = []
 
-        for b in range(365):
-            change = random.uniform(-0.02, 0.02)
-            share += share * change
+        for i in range(len(prices)):
+            share = prices[i]
 
             # price history
             his100.append(share)
@@ -63,6 +89,9 @@ def monteCarlo1(length):
                 nw += share
                 sellCount = 0
 
+            nw1 = stockCount * share + nw
+            nwtrend.append(nw1)
+            
         nw = stockCount * share + nw
         results.append(nw)
 
@@ -72,20 +101,29 @@ def monteCarlo1(length):
 # hold sim
 def monteCarlo2(length):
     results = []
-
+    nwtrend = []
     for a in range(length):
+        prices = priceGen()
         nw = 9900
         share = 100
         stockCount = 1
+        
 
-        for b in range(365):
-            change = random.uniform(-0.02, 0.02)
-            share += share * change
-
-        nw = stockCount * share + nw
+        for i in range(len(prices)):
+            share = prices[i]
+            nw1 = stockCount * share + nw
+            nwtrend.append(nw1)
+        nw =  stockCount * share + nw   
         results.append(nw)
 
     return results
+
+
+def year(prices, trading):
+    for i in range(length):
+        prices = priceGen()
+        
+    
 
 
 # analysing both methods
@@ -117,4 +155,10 @@ statsAnalysis(500)
     
 
     
+    
+
+    
+
+    
+
     
