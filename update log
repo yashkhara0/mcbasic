@@ -1,5 +1,6 @@
-v1 – basic random market and 3-day rule
-v2 – moving average strategy
-v3 – Monte Carlo testing
-v4 – baseline comparison (finished on 30/01/2026)
-v5 – market modelling (drift/momentum)
+v1 – basic random market and 3-day rule, moving average strategy, Monte Carlo testing, baseline comparison (finished on 30/01/2026)
+v2 – market modelling (drift/momentum) (02/02/2026)
+v3 - incorporated graphs
+  -testing expected results 
+    - created function to find trading fee effect on trading strategy
+    - found expected negative correlation
