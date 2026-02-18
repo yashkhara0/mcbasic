@@ -1,5 +1,6 @@
 import random
 import matplotlib.pyplot as plt
+import requests as req
 
 # basic avg finder
 def avgPrice(arr):
@@ -31,7 +32,10 @@ def priceGen():
     
     return prices
         
-
+response = req.get('https://api.coinbase.com/v2/prices/BTC-USD/historic?period=day')
+data = response.json()
+price = data['data']['prices']
+prices = [float(item['price']) for item in price]
 
 # trading sim
 def monteCarlo1(priceList, fee):
@@ -164,7 +168,7 @@ def statsAnalysis2(length,feeList):
     for fee in feeList:
         diffs = []
         for i in range(length):
-            p = priceGen()
+            p = prices
             mc1,mc1list = monteCarlo1(p, fee)
             mc2,mc2list = monteCarlo2(p)
             diffs.append(mc1-mc2)
@@ -194,7 +198,4 @@ for i in range(1, 11):
 # func call
 statsAnalysis2(1000, feeList)
 
-    
-
-    
     
